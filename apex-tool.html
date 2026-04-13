@@ -1473,7 +1473,8 @@
       // 30-day eval timer
       let evalTimerHtml = '';
       if (isEval && acct.startDate) {
-        const start = new Date(acct.startDate);
+        const [sy, sm, sd] = acct.startDate.split('-').map(Number);
+        const start = new Date(sy, sm - 1, sd);
         const today = new Date();
         today.setHours(0,0,0,0);
         const elapsed = Math.floor((today - start) / (1000*60*60*24));
