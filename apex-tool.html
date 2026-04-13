@@ -690,6 +690,7 @@
   .dd-warn { background: rgba(255,107,53,0.15); color: var(--warn); }
 
   /* Strategy tab styles */
+  .s-speed-banner { background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.2); border-radius: 4px; padding: 12px 14px; font-family: var(--mono); font-size: 11px; color: var(--accent); line-height: 1.6; letter-spacing: 0.03em; margin-bottom: 20px; }
   .s-section-label { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin: 24px 0 12px; opacity: 0.8; }
   .s-phase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 8px; }
   .s-phase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 12px 14px; position: relative; overflow: hidden; }
@@ -837,10 +838,10 @@
   </div>
 
   <div class="field">
-    <label>Daily Loss Limit <span style="opacity:0.5;font-size:9px">— 2× risk = 2 losing trades max</span></label>
+    <label>Daily Loss Limit</label>
     <div class="input-row">
-      <input type="number" id="dailyLossMultiple" placeholder="e.g. 2" step="1" min="1" max="10" value="2" oninput="updateRiskDollar()">
-      <div class="unit-badge">× RISK</div>
+      <input type="number" id="dailyLossPct" placeholder="e.g. 0.6" step="0.1" min="0.1" max="100" value="0.6" oninput="updateRiskDollar()">
+      <div class="unit-badge">%</div>
     </div>
     <div style="margin-top:8px; font-family:var(--mono); font-size:13px; color:var(--warn);" id="dailyLossDisplay"></div>
   </div>
@@ -888,6 +889,10 @@
     <div class="result-row">
       <span class="result-label">DAILY LOSS LIMIT</span>
       <span class="result-value warning" id="rDailyLoss">—</span>
+    </div>
+    <div class="result-row">
+      <span class="result-label">TRADES ALLOWED / DAY</span>
+      <span class="result-value highlight" id="rTradesAllowed">—</span>
     </div>
     <div class="result-row">
       <span class="result-label">ACTUAL RISK</span>
@@ -1004,35 +1009,40 @@
       <div class="s-phase-title">Prove the edge</div>
       <div class="s-row"><span class="s-key">Accounts</span><span class="s-val">1 × 100K</span></div>
       <div class="s-row"><span class="s-key">Your cost</span><span class="s-val warn">$198.90</span></div>
-      <div class="s-row"><span class="s-key">Extracted</span><span class="s-val good">$18,000</span></div>
+      <div class="s-row"><span class="s-key">Lifetime value</span><span class="s-val good">$18,000</span></div>
+      <div class="s-row"><span class="s-key">Move when</span><span class="s-val accent">Payout 1 lands</span></div>
     </div>
     <div class="s-phase-card">
       <div class="s-phase-num">Phase 2</div>
       <div class="s-phase-title">Rolling 3 accounts</div>
       <div class="s-row"><span class="s-key">Accounts</span><span class="s-val">3 × 100K</span></div>
       <div class="s-row"><span class="s-key">Your cost</span><span class="s-val good">$0</span></div>
-      <div class="s-row"><span class="s-key">Extracted</span><span class="s-val good">$54,000</span></div>
+      <div class="s-row"><span class="s-key">Lifetime value</span><span class="s-val good">$54,000</span></div>
+      <div class="s-row"><span class="s-key">Move when</span><span class="s-val accent">Payout 1 lands</span></div>
     </div>
     <div class="s-phase-card">
       <div class="s-phase-num">Phase 3</div>
       <div class="s-phase-title">Step up to 150K</div>
       <div class="s-row"><span class="s-key">Accounts</span><span class="s-val">3 × 150K</span></div>
       <div class="s-row"><span class="s-key">Your cost</span><span class="s-val good">$0</span></div>
-      <div class="s-row"><span class="s-key">Extracted</span><span class="s-val good">$61,500</span></div>
+      <div class="s-row"><span class="s-key">Lifetime value</span><span class="s-val good">$61,500</span></div>
+      <div class="s-row"><span class="s-key">Move when</span><span class="s-val accent">Payout 1 lands</span></div>
     </div>
     <div class="s-phase-card">
       <div class="s-phase-num">Phase 4</div>
       <div class="s-phase-title">Scale to 5 accounts</div>
       <div class="s-row"><span class="s-key">Accounts</span><span class="s-val">5 × 150K</span></div>
       <div class="s-row"><span class="s-key">Your cost</span><span class="s-val good">$0</span></div>
-      <div class="s-row"><span class="s-key">Extracted</span><span class="s-val good">$102,500</span></div>
+      <div class="s-row"><span class="s-key">Lifetime value</span><span class="s-val good">$102,500</span></div>
+      <div class="s-row"><span class="s-key">Move when</span><span class="s-val accent">Payout 1 lands</span></div>
     </div>
     <div class="s-phase-card">
       <div class="s-phase-num">Phase 5</div>
       <div class="s-phase-title">Scale to 10 accounts</div>
       <div class="s-row"><span class="s-key">Accounts</span><span class="s-val">10 × 150K</span></div>
       <div class="s-row"><span class="s-key">Your cost</span><span class="s-val good">$0</span></div>
-      <div class="s-row"><span class="s-key">Extracted</span><span class="s-val good">$205,000</span></div>
+      <div class="s-row"><span class="s-key">Lifetime value</span><span class="s-val good">$205,000</span></div>
+      <div class="s-row"><span class="s-key">Move when</span><span class="s-val accent">Payout 1 lands</span></div>
     </div>
     <div class="s-phase-card s-endgame">
       <div class="s-phase-num">Phase 6 — endgame</div>
@@ -1042,6 +1052,7 @@
       <div class="s-row"><span class="s-key">Per rotation</span><span class="s-val good">$405,222</span></div>
     </div>
   </div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.08em;margin-bottom:20px;padding:0 2px;">* Phases are account count milestones, not time milestones</div>
 
   <div class="s-section-label">HOW THE ROLLING MODEL WORKS</div>
   <div class="s-flow">
@@ -1157,16 +1168,19 @@
   function updateRiskDollar() {
     const balance = parseFloat(document.getElementById('accountBalance').value);
     const pct = parseFloat(document.getElementById('riskPct').value);
-    const multiple = parseFloat(document.getElementById('dailyLossMultiple').value) || 2;
+    const dllPct = parseFloat(document.getElementById('dailyLossPct').value);
     const display = document.getElementById('riskDollarDisplay');
     const dllDisplay = document.getElementById('dailyLossDisplay');
     if (balance && pct) {
       const dollar = balance * pct / 100;
-      const dll = dollar * multiple;
       display.textContent = '= $' + dollar.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-      dllDisplay.textContent = '= $' + dll.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' max loss per day';
     } else {
       display.textContent = '';
+    }
+    if (balance && dllPct) {
+      const dll = balance * dllPct / 100;
+      dllDisplay.textContent = '= $' + dll.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' max loss per day';
+    } else {
       dllDisplay.textContent = '';
     }
     calculate();
@@ -1203,8 +1217,8 @@
     const warning = document.getElementById('warningBanner');
 
     const riskAmount = (balance && riskPct) ? balance * riskPct / 100 : null;
-    const multiple = parseFloat(document.getElementById('dailyLossMultiple').value) || 2;
-    const dailyLossLimit = riskAmount ? riskAmount * multiple : null;
+    const dllPct = parseFloat(document.getElementById('dailyLossPct').value);
+    const dailyLossLimit = (balance && dllPct) ? balance * dllPct / 100 : null;
 
     if (!tickSize || !tickValue || !stopPips || !riskAmount) {
       document.getElementById('emptyState').style.display = 'block';
@@ -1267,6 +1281,15 @@
 
     document.getElementById('rActualRisk').textContent = '$' + actualRisk.toFixed(2);
     document.getElementById('rDailyLoss').textContent = dailyLossLimit ? '$' + dailyLossLimit.toFixed(2) : '—';
+    const tradesEl = document.getElementById('rTradesAllowed');
+    if (dailyLossLimit && actualRisk > 0) {
+      const allowed = Math.floor(dailyLossLimit / actualRisk);
+      tradesEl.textContent = allowed + ' trade' + (allowed !== 1 ? 's' : '');
+      tradesEl.className = 'result-value ' + (allowed >= 3 ? 'positive' : allowed === 2 ? 'highlight' : 'warning');
+    } else {
+      tradesEl.textContent = '—';
+      tradesEl.className = 'result-value';
+    }
 
     // RR and target
     const rrEl = document.getElementById('rRRLabel');
@@ -1447,6 +1470,26 @@
       const payoutCap = getPayoutCap(acct.size, acct.cycle);
       const safetyNet = acct.size + acct.drawdownLimit + 100;
 
+      // 30-day eval timer
+      let evalTimerHtml = '';
+      if (isEval && acct.startDate) {
+        const start = new Date(acct.startDate);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const elapsed = Math.floor((today - start) / (1000*60*60*24));
+        const daysLeft = 30 - elapsed;
+        const timerColor = daysLeft > 10 ? 'good' : daysLeft > 5 ? 'warn' : 'warn';
+        const timerStyle = daysLeft <= 5 ? 'color:var(--warn)' : daysLeft <= 10 ? 'color:#f0a500' : 'color:var(--accent2)';
+        const timerText = daysLeft > 0 ? daysLeft + ' days left' : Math.abs(daysLeft) + ' days over';
+        evalTimerHtml = `<div style="background:rgba(0,0,0,0.2);border-top:1px solid var(--border);padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.12em">30-DAY EVAL WINDOW</span>
+          <span style="font-family:var(--mono);font-size:12px;${timerStyle};font-weight:600">${timerText}</span>
+          <div style="width:120px;height:3px;background:var(--border);border-radius:2px;overflow:hidden">
+            <div style="height:100%;width:${Math.min(100,Math.max(0,(elapsed/30)*100)).toFixed(0)}%;background:${daysLeft<=5?'var(--warn)':daysLeft<=10?'#f0a500':'var(--accent2)'};border-radius:2px;transition:width 0.3s"></div>
+          </div>
+        </div>`;
+      }
+
       const tradeRows = trades.slice().reverse().map(t => {
         const isQual = t.pnl >= qualThresh;
         const pnlClass = t.pnl > 0 ? 'trade-pnl-pos' : t.pnl < 0 ? 'trade-pnl-neg' : 'trade-pnl-be';
@@ -1511,6 +1554,8 @@
             <div class="acct-stat-value ${ddPct>50?'good':ddPct>25?'accent':'warn'}">$${acct.drawdownLimit}</div>
           </div>
         </div>
+
+        ${evalTimerHtml}
 
         <div class="trade-log">
           <div class="trade-log-header">
